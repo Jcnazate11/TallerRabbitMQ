@@ -1,4 +1,3 @@
-
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/bd_catalogo
@@ -18,6 +17,5 @@ spring:
     port: 5672
     username: admin
     password: admin
-rabbitmq:
-  queue:
-    catalogo: catalogo.cola
+server:
+  port: 8002
