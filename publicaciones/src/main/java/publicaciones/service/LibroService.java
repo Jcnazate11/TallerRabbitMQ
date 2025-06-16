@@ -21,6 +21,9 @@ public class LibroService {
     @Autowired
     private AutorRepository autorRepository;
 
+    @Autowired
+    private NotificacionProducer producer;
+
     public ResponseDto crearLibro(LibroDto libroDto) {
         try {
             Autor autor = autorRepository.findById(libroDto.getIdAutor())
@@ -37,6 +40,7 @@ public class LibroService {
             libro.setAutor(autor);
 
             Libro libroGuardado = libroRepository.save(libro);
+            producer.enviarNotificacion("Libro: " + libroGuardado.getTitulo() + " ha sido registrado", "Libro");
             return new ResponseDto("Libro creado exitosamente", libroGuardado);
 
         } catch (Exception e) {
