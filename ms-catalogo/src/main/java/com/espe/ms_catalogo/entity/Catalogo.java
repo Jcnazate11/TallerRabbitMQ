@@ -1,7 +1,6 @@
 package com.espe.ms_catalogo.entity;
 
-import com.espe.ms_catalogo.dto.ArticulosCientificosDto;
-import com.espe.ms_catalogo.dto.LibroDto;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,6 +24,4 @@ public class Catalogo {
     private String editorial;
     private String isbn;
 
-    private LibroDto libro;
-    private ArticulosCientificosDto articulo;
 }
