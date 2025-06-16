@@ -14,7 +14,7 @@ public class CatalogoListener {
 
     @Autowired
     private ObjectMapper mapper;
-    @RabbitListener(queues = "notificaciones.cola")
+    @RabbitListener(queues = "catalogo.cola")
     public void recibirMensajes(String mensaje){
         try{
             CatalogoDto dto = mapper.readValue(mensaje, CatalogoDto.class);
