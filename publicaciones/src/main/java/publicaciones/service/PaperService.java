@@ -21,6 +21,9 @@ public class PaperService {
     private AutorRepository autorRepository;
 
     @Autowired
+    private NotificacionProducer producer;
+
+    @Autowired
     private CatalogoProducer producerCatalogo;
 
     public ResponseDto crearPaper(PaperDto paperDto) {
@@ -41,6 +44,7 @@ public class PaperService {
             paper.setAutor(autor);
 
             Paper paperGuardado = paperRepository.save(paper);
+            producer.enviarNotificacion("Paper: " + paperGuardado.getTitulo() + " ha sido registrado", "Paper");
             // Enviar al catálogo como "Articulo"
             producerCatalogo.enviarCatalogo(
                     "Articulo", // tipo
@@ -79,6 +83,7 @@ public class PaperService {
             paperExistente.setAutor(autor);
 
             Paper paperActualizado = paperRepository.save(paperExistente);
+            producer.enviarNotificacion("Paper: " + paperActualizado.getTitulo() + " ha sido actualizado", "Paper");
             return new ResponseDto("Paper actualizado correctamente", paperActualizado);
 
         } catch (Exception e) {
@@ -107,6 +112,7 @@ public class PaperService {
             Paper paperExistente = paperRepository.findById(id)
                     .orElseThrow(() -> new RuntimeException("No existe el paper con id: " + id));
             paperRepository.delete(paperExistente);
+            producer.enviarNotificacion("Paper: " + paperExistente.getTitulo() + " ha sido eliminado", "Paper");
             return new ResponseDto("Paper eliminado correctamente", null);
         } catch (Exception e) {
             return new ResponseDto("Error al eliminar el paper: " + e.getMessage(), null);
