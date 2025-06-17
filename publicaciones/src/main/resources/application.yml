@@ -1,6 +1,6 @@
 spring:
     datasource:
-      url: jdbc:postgresql://localhost:5432/bd_publicaciones
+      url: jdbc:postgresql://localhost:5432/bd-publicaciones
       username: postgres
       password: 'espe'
     jpa:
@@ -15,7 +15,7 @@ spring:
     rabbitmq:
       host: localhost
       port: 5672
-      username: admin
-      password: admin
-    server:
-      port: 8000
+      username: guest
+      password: guest
+server:
+  port: 8000
