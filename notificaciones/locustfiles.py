@@ -3,7 +3,7 @@ import random
 
 class PublicacionUser(HttpUser):
     # 👇 Añade esta línea con la URL del microservicio de publicaciones
-    host = "http://localhost:8080"
+    host = "http://localhost:8000"
 
     wait_time = between(0.5, 1.5)  # Tiempo entre peticiones
 
