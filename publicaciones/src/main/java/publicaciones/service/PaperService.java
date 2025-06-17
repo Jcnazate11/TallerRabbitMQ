@@ -20,6 +20,9 @@ public class PaperService {
     @Autowired
     private AutorRepository autorRepository;
 
+    @Autowired
+    private CatalogoProducer producerCatalogo;
+
     public ResponseDto crearPaper(PaperDto paperDto) {
         try {
             Autor autor = autorRepository.findById(paperDto.getIdAutor())
@@ -38,7 +41,18 @@ public class PaperService {
             paper.setAutor(autor);
 
             Paper paperGuardado = paperRepository.save(paper);
+            // Enviar al catálogo como "Articulo"
+            producerCatalogo.enviarCatalogo(
+                    "Articulo", // tipo
+                    paperGuardado.getTitulo(),
+                    paperGuardado.getAnioPublicacion(),
+                    paperGuardado.getResumen(),
+                    paperGuardado.getEditorial(),
+                    paperGuardado.getIsbn()
+            );
+
             return new ResponseDto("Paper creado exitosamente", paperGuardado);
+
 
         } catch (Exception e) {
             return new ResponseDto("Error al crear el paper: " + e.getMessage(), null);

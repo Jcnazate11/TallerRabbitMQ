@@ -24,6 +24,9 @@ public class LibroService {
     @Autowired
     private NotificacionProducer producer;
 
+    @Autowired
+    private CatalogoProducer producerCatalogo;
+
     public ResponseDto crearLibro(LibroDto libroDto) {
         try {
             Autor autor = autorRepository.findById(libroDto.getIdAutor())
@@ -41,6 +44,17 @@ public class LibroService {
 
             Libro libroGuardado = libroRepository.save(libro);
             producer.enviarNotificacion("Libro: " + libroGuardado.getTitulo() + " ha sido registrado", "Libro");
+
+            // Enviar a ms-catalogo
+            producerCatalogo.enviarCatalogo(
+                    "Libro", // tipo
+                    libroGuardado.getTitulo(),
+                    libroGuardado.getAnioPublicacion(),
+                    libroGuardado.getResumen(),
+                    libroGuardado.getEditorial(),
+                    libroGuardado.getIsbn()
+            );
+
             return new ResponseDto("Libro creado exitosamente", libroGuardado);
 
         } catch (Exception e) {
