@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-public class CatalogoService {
+public class  CatalogoService {
     @Autowired
     private CatalogoRepository repository;
 
